@@ -1,0 +1,141 @@
+<html>
+
+<head>
+	<!-- IverilogDemo -->
+	<title> HelloVue </title>
+	<script src="https://static.nowcoder.com/ajax/libs/vue/2.6.9/vue.min.js"></script>
+        
+</head>
+<style>
+	.container {
+		margin: 50px auto;
+	}
+
+	table {
+		border: 1px solid #ddd;
+	}
+
+	th {
+		border: 1px solid #ddd;
+		padding: 10px;
+	}
+
+	td {
+		border: 1px solid #ddd;
+		padding: 10px;
+	}
+</style>
+
+<body>
+	<div id="app">
+		<div class="container" style="max-width:600px">
+			<table class="table" cellspacing="0" cellpadding="0">
+				<tr>
+					<th>商品名称</th>
+					<th>商品价格</th>
+					<th>数量</th>
+					<th>小计</th>
+					<th>操作</th>
+				</tr>
+				<tr>
+					<th><input type="text" v-model.trim='inputName1' style="width: 100px;"></th>
+					<th><input type="text" v-model.trim='inputPrice1' style="width: 100px;"></th>
+					<th><input type="text" v-model.trim='inputNum1' style="width: 100px;"></th>
+					<th></th>
+					<th><button @click="addItem">增加</button></th>
+				</tr>
+				<tr v-for='(item,index) in carts.items'>
+					<td>
+						<input type="checkbox" v-model="item.isChecked" @change="calculateTotalPrice">
+						{{ item.itemName}}
+					</td>
+					<td>{{ item.itemPrice}}</td>
+					<td>
+						<button class="btn btn-xs" @click="decreaseItem(index)">-</button>
+						{{ item.itemNum}}
+						<button class="btn btn-xs" @click="increaseItem(index)">+</button>
+					</td>
+					<td>{{(item.itemPrice*item.itemNum) }}</td>
+					<td><button class="btn btn-danger btn-sm" @click="removeItem(index)">删除</button></td>
+				<tr>
+					<td colspan="5">全选：
+						<input type="checkbox" v-model="carts.isAllChecked" @change="selectAll">
+						总价{{carts.total}}
+					</td>
+				</tr>
+				</tr>
+
+			</table>
+		</div>
+	</div>
+	<script>
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				inputName1: "",
+				inputPrice1: "",
+				inputNum1: "",
+				obj: {},
+				carts: {
+					isAllChecked: false,
+					total: 0,
+					items: [{
+						itemName: '商品a',
+						itemPrice: '10',
+						itemNum: '1',
+						isChecked: false
+					}]
+				}
+			},
+			mounted() {
+				// 在此处补充代码
+			},
+			methods: {
+        // 在此处补充代码
+        addItem() {
+          let newItem = {
+            itemName: this.inputName1,
+            itemPrice: this.inputPrice1,
+            itemNum: this.inputNum1,
+            isChecked: false
+          }
+          let existingItem = this.carts.items.find(item => item.itemName === newItem.itemName)
+          if(existingItem){
+            alert('该商品已存在，请勿重复添加')
+          }else{
+            this.carts.items.push(newItem)
+          }
+          this.calculateTotalPrice()
+        },
+        removeItem(index){
+          this.carts.items.splice(index,1)
+          this.calculateTotalPrice()
+        },
+        increaseItem(index){
+          this.carts.items[index].itemNum++
+          this.calculateTotalPrice()
+        },
+        decreaseItem(index){
+          if(this.carts.items[index].itemNum > 1){
+            this.carts.items[index].itemNum--
+          }
+          this.calculateTotalPrice()
+        },
+        selectAll(){
+          this.carts.items.forEach(item => item.isChecked = this.carts.isAllChecked)
+          this.calculateTotalPrice()
+        },
+        calculateTotalPrice(){
+          this.carts.total = this.carts.items.reduce((total,item) => {
+            if(item.isChecked){
+              total += item.itemPrice * item.itemNum
+            }
+            return total
+          },0)
+        }
+			}
+		})
+	</script>
+</body>
+
+</html>

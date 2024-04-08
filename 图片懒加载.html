@@ -1,0 +1,78 @@
+<html>
+
+<head>
+	<!-- IverilogDemo -->
+	<title> Hello </title>
+	<script src="https://static.nowcoder.com/ajax/libs/vue/2.6.9/vue.min.js"></script>
+</head>
+<style>
+	/* 在此处补充代码 */
+  .box{
+    height: 1500px;
+  }
+  .myImg{
+    margin: 20px;
+    width: 30%;
+  }
+</style>
+
+<body>
+	<div id="example">
+		<div class="box">
+			<!-- 在此处补充代码 -->
+      <img v-for="(item,index) in content" :key="index" :src="defaultUrl" :data-src="item.src" :data-num="item.num" class="myImg">
+	</div>
+	<script>
+		// 在此处补充代码
+		var vm = new Vue({
+			el: '#example',
+			data() {
+				return {
+					content:[{src:'https://static.nowcoder.com/ajax/img/vue-Lazyloading/img/img1.jpg',num:'45002'},
+					{src:'https://static.nowcoder.com/ajax/img/vue-Lazyloading/img/img2.jpg',num:'368724'},
+					{src:'https://static.nowcoder.com/ajax/img/vue-Lazyloading/img/img3.jpg',num:'96487'},
+					{src:'https://static.nowcoder.com/ajax/img/vue-Lazyloading/img/img4.jpg',num:'86944'},
+					{src:'https://static.nowcoder.com/ajax/img/vue-Lazyloading/img/img5.jpg',num:'43761'},
+					{src:'https://static.nowcoder.com/ajax/img/vue-Lazyloading/img/img6.jpg',num:'64937'},
+					{src:'https://static.nowcoder.com/ajax/img/vue-Lazyloading/img/img7.jpg',num:'34978'},
+					{src:'https://static.nowcoder.com/ajax/img/vue-Lazyloading/img/img8.jpg',num:'64913'},
+					{src:'https://static.nowcoder.com/ajax/img/vue-Lazyloading/img/img9.jpg',num:'42567'},
+					{src:'https://static.nowcoder.com/ajax/img/vue-Lazyloading/img/img10.jpg',num:'4697'},
+					{src:'https://static.nowcoder.com/ajax/img/vue-Lazyloading/img/img11.jpg',num:'64874'},
+					{src:'https://static.nowcoder.com/ajax/img/vue-Lazyloading/img/img12.jpg',num:'36972'},
+					{src:'https://static.nowcoder.com/ajax/img/vue-Lazyloading/img/img13.jpg',num:'67355'},],
+					defaultUrl: 'https://static.nowcoder.com/ajax/img/vue-Lazyloading/img/loading.jpg'
+				}
+			},
+			mounted(){
+        window.addEventListener('scroll', this.throttle(this.lazyLoad, 1000))
+			},
+			methods: {
+        lazyLoad() {
+          const imgs = document.getElementsByTagName('img')
+          for(let img of imgs) {
+            const rect = img.getBoundingClientRect()
+            if(rect.top < window.innerHeight && rect.bottom >= 0) {
+              img.src = img.getAttribute('data-src')
+            }
+          }
+          if(document.querySelectorAll('img[src="'+ this.defaultUrl + '"]').length === 0){
+            window.removeEventListener('scroll', this.lazyLoad)
+          }
+        },
+        throttle(fn,delay){
+          let lastTime = 0
+          return function() {
+            const now = new Date().getTime()
+            if(now - lastTime > delay) {
+              fn()
+              lastTime = now
+            }
+          }
+        }
+			}
+		})
+	</script>
+</body>
+
+</html>
