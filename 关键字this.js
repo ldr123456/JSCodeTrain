@@ -13,6 +13,7 @@ const obj = {
   }
 };
 
+
 obj.method(); // 方法作为对象的成员调用，this 指向 obj 对象
 
 const boundMethod = obj.method.bind(obj); // 使用 bind 方法手动绑定 this
