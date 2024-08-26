@@ -14,3 +14,4 @@ function makeTree(arr) {
 }
 
 console.log(makeTree(["a/b/c", "a/b/d", "a/b/e", "a/f/g"]));
+

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实心十字</title>
+  <style>
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .cross-container {
+      position: relative;
+      width: 450px;
+      height: 450px;
+    }
+
+    .cross {
+      position: absolute;
+      box-sizing: border-box;
+      background-color: #d8d8d8;
+    }
+
+    .vertical-bar {
+      width: 90px;
+      height: 450px;
+      border: 1px solid red;
+      left: calc(50% - 45px);
+      top: 0;
+    }
+
+    .horizontal-bar {
+      width: 450px;
+      height: 90px;
+      border: 1px solid red;
+      top: calc(50% - 45px);
+      left: 0;
+    }
+
+    .vertical-bar2 {
+      position: absolute;
+      background-color: #d8d8d8;
+      width: 88px;
+      height: 448px;
+      left: calc(50% - 44px);
+      top: 1px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cross-container">
+    <div class="cross vertical-bar"></div>
+    <div class="cross horizontal-bar"></div>
+    <div class="cross vertical-bar2"></div>
+  </div>
+</body>
+
+</html>
